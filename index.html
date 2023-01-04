@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.css" />
+    
+   
+    
+</head>
+<body onload="displayTODOlist()">
+    <div class="container">
+        <div class="wrapper">
+            <div class="box">
+                <div id="addmodal" class="addModalbg">
+                    <div class="addModalz bg-yellow-200 p-8 flex flex-col justify-between">
+                        <div class="flex flex-grow flex-col justify-between py-16 items-start relative">
+                            <div class="absolute top-0 flex justify-between w-full">
+                                <h3 class="font-extrabold text-4xl">Add A TODO</h3>
+                                <div>
+                                    <button id="dropdownDefault" data-dropdown-toggle="dropdown-colors" data-dropdown-placement="right-start" type="button" class="shadow-md flex justify-center items-center rounded-lg bg-yellow-100 w-10 h-10 p-2" style="padding:0;">
+                                        <div id="colorIcon" class=" z-10 w-8 h-8 rounded-md" style="background: radial-gradient(circle, rgba(255,0,0,1) 5%, rgba(255,244,0,1) 14%, rgba(26,254,0,1) 23%, rgba(0,253,251,1) 35%, rgba(0,21,252,1) 50%, rgba(244,0,251,1) 63%, rgba(250,0,93,1) 74%, rgba(250,0,25,1) 86%);">
+                                        </div>
+                                    </button>
+                                    <div id="dropdown-colors" class="whitespace-normal hidden z-10 w-fit bg-yellow-100 rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                                        <ul class="flex justify-evenly flex-wrap rounded-md text-sm text-gray-700 dark:text-gray-200 w-40 gap-2 p-2" aria-labelledby="dropdownDefault">
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#000046","#1CB5E0");' style="background: linear-gradient(90deg,#000046,#1CB5E0);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#007991","#78ffd6");' style="background: linear-gradient(90deg,#007991,#78ffd6);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#F2994A","#F2C94C");' style="background: linear-gradient(90deg,#F2994A,#F2C94C);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#EB5757","#000000");' style="background: linear-gradient(90deg,#EB5757,#000000);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#E44D26","#F16529");' style="background: linear-gradient(90deg,#E44D26,#F16529);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#4AC29A","#BDFFF3");' style="background: linear-gradient(90deg,#4AC29A,#BDFFF3);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#B2FEFA","#0ED2F7");' style="background: linear-gradient(90deg,#B2FEFA,#0ED2F7);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#30E8BF","#FF8235");' style="background: linear-gradient(90deg,#30E8BF,#FF8235);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#D66D75","#E29587");' style="background: linear-gradient(90deg,#D66D75,#E29587);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#20002c","#cbb4d4");' style="background: linear-gradient(90deg,#20002c,#cbb4d4);"></button>
+                                            </li>
+                                            <li>
+                                                <button class="z-10 w-8 h-8 rounded-md" onclick='getColor("#C33764","#1D2671");' style="background: linear-gradient(90deg,#C33764,#1D2671);"></button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="flex flex-col w-full">
+                                <b>Todo Title:</b>
+                                <input id="todoTitle" type="text">
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <b>Todo Description:</b>
+                                <textarea id="todoDesc" class="w-full resize-none"  name="todoDesc" id="" cols="30" rows="10"></textarea>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="flex flex-row justify-end items-center">
+                            <button onclick="saveTODO()" id="addTodo" class="px-4 py-2 rounded-md mx-2 hover:bg-green-400 bg-green-200">Add Todo</button>
+                            <button onclick="hideAddTodo()" class="px-4 py-2 rounded-md mx-2 hover:bg-red-400 bg-red-200">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <header class="shadow-lg">
+                    <div class="title">To do App</div>
+                    <div class="flex justify-around items-center gap-4">
+                        <button onclick="showAddTodo()" class="btn-todo"><i class="fa-solid fa-plus"></i></button>
+                        <button onclick="clearAll()" class="btn-todo"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </header>
+                <main class="todolist">
+                    <ul id="yesTodos" class="todos hidden flex flex-wrap justify-start content-around gap-4">
+                        <!-- <li>
+                            <div class="border-2 border-black shadow-md p-4 flex flex-col justify-around items-start">
+                                <b class="text-xl font-bold">Todo Title</b>
+                                <p class="text-base">Todo Description Loren Ipsum</p>
+                            </div>
+                        </li> -->
+                    </ul>
+                    <div id="noTodos" class="w-full h-full hidden flex justify-center items-center">
+                        <b class="text-2xl font-bold">No Todo Task / Create a New Todo Task</b>
+                    </div>
+                </main>
+                <footer>
+                    <p>Allrights reserved to Geno.</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="script2.js"></script>
+<script src="https://kit.fontawesome.com/d1a7d83221.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/flowbite@1.6.0/dist/flowbite.min.js"></script>
+
+</html>
