@@ -3,9 +3,11 @@ const todoTitle = document.querySelector('#todoTitle');
 const todoDesc = document.querySelector('#todoDesc');
 const saveBtn = document.querySelector('#addTodo');
 
+//Banner Use
 let todoColor1; //global variable for color gradient 1
 let todoColor2; //global variable for color gradient 1
 
+//Banner Use
 //function for the color option button in the addTodomodal
 function getColor(color1,color2){
     todoColor1 = color1;
@@ -15,6 +17,7 @@ function getColor(color1,color2){
     
     return {todoColor1,todoColor2};
 }
+//Banner Use
 //object variable that does the fetching of the todo array.
 const getTodos = () => {
     let todos;//the array, this is our local database
@@ -26,6 +29,7 @@ const getTodos = () => {
     return todos;
 }
 
+//Banner Use
 //object variable model that does the saving of the data to the todo array.
 const saveTodos = (TodoTitle,TodoDesc,TodoColor1,TodoColor2) => {
     const todos = getTodos();
@@ -33,20 +37,9 @@ const saveTodos = (TodoTitle,TodoDesc,TodoColor1,TodoColor2) => {
     localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-
+//Banner Use
 //object variable that does the adding of the Todos data to the todos array thru saveTodos().
 const addTodos = () => {
-
-    // e.preventDefault();
-
-    // let li = document.createElement('li');
-
-    // let card = "<div class='border-2 border-black shadow-md p-4 flex flex-col justify-around items-start'><b class='text-xl font-bold'>Todo Title</b><p class='text-base'>Todo Description Loren Ipsum</p></div>" ; //put here the format div
-    // li.textContent = card;
-
-    // let title = todoTitle.value;
-    // let desc = todoDesc.value;
-    // document.getElementById("yesTodos").innerHTML += "<li><div class='border-2 border-black shadow-md p-4 flex flex-col justify-around items-start'><b class='text-xl font-bold'>"+title+"</b><p class='text-base'>"+desc+"</p></div></li>";
 
     saveTodos(todoTitle.value,todoDesc.value,todoColor1,todoColor2);//passes the files to the saveTodos object variable to perform the saving of the data to the todos array.
 
@@ -56,12 +49,8 @@ const addTodos = () => {
 }
 
 function saveTODO(){
-    // const todoTitled = document.querySelector('#todoTitle').value.toLocaleString();
-    // const todoDescd = document.querySelector('#todoDesc').value.toLocaleString();
 
     addTodos();//calls the object addTodos to perform the saving of data to todos array when saveTODO function is called.
-
-    // document.querySelector(".todos").innerHTML += "<li><div class='border-2 border-black shadow-md p-4 flex flex-col justify-around items-start'><b class='text-xl font-bold'>Todo Title</b><p class='text-base'>Todo Description Loren Ipsum</p></div></li>";
 
     //a delayed function at 0.5 second: to hide the addTodoModal, and refreshes the page so the new todo will show up.
     setTimeout(function(){
@@ -89,26 +78,22 @@ function displayTODOlist(){
     let listtodo = getTodos(); //passing the array getTodos() to the new variable listtodo
 
     //if the todos array is empty show the div that shows "No TODO List"
-    if(localStorage.length == 0){ 
+    if(listtodo.length == 0){ 
         document.querySelector("#yesTodos").classList.add("hidden")
         document.querySelector("#noTodos").classList.remove("hidden")
     }
     //if the todos array is not empty show the div that shows the TODO List"
-    else if(localStorage.length > 0){
+    else if(listtodo.length > 0){
         document.querySelector("#noTodos").classList.add("hidden")
         document.querySelector("#yesTodos").classList.remove("hidden")
 
        //Loop that calls all data into the card
         for (var i = 0; i < listtodo.length; i++){
-            // console.log(listtodo[i][0])
-            // console.log(localStorage.getItem(localStorage.key(i).todoTitle.value));
             let title = listtodo[i][0];//contains the data
             let desc = listtodo[i][1];//contains the desc
             let color1 = listtodo[i][2];//contains the color 1
             let color2 = listtodo[i][3];//contains the color 2
-            // console.log(localStorage.length)
-            // console.log(title,desc)
-            document.getElementById("yesTodos").innerHTML += "<li><div onclick='todocardtoggle("+i+")' id='chkX"+i+"' class='relative rounded-md cursor-pointer shadow-md p-4 flex flex-col justify-around items-start' style='background: linear-gradient(90deg,"+color1+","+color2+");'><button id='delbtn"+i+"' onclick='removeTODO("+i+")' class='absolute hidden top-0 right-0 px-2 py-0 hover:bg-red-500 rounded-full'><i class='fa-solid fa-xmark'></i></button><b class='text-xl font-bold'>"+title+"</b><p class='text-base italic'>"+desc+"</p></div></li>";
+            document.getElementById("yesTodos").innerHTML += "<li class='flex-auto'><div onclick='todocardtoggle("+i+")' id='chkX"+i+"' class='relative rounded-md cursor-pointer shadow-md p-4 flex flex-col justify-around items-start' style='background: linear-gradient(90deg,"+color1+","+color2+");'><button id='delbtn"+i+"' onclick='removeTODO("+i+")' class='absolute hidden top-0 right-0 px-2 py-0 hover:bg-red-500 rounded-full'><i class='fa-solid fa-xmark'></i></button><b class='text-xl font-bold'>"+title+"</b><p class='text-base italic'>"+desc+"</p></div></li>";
 
             
         }
@@ -117,7 +102,8 @@ function displayTODOlist(){
 
 //for clearing all data in the localstorage then refrehses the page.
 function clearAll(){
-    localStorage.clear();
+    todos = []
+    localStorage.setItem('todos',JSON.stringify(todos));
     location.reload();
 }
 
